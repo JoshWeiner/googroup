@@ -1,4 +1,4 @@
-package com.example.android.wifidirect;
+package dvorak.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +23,7 @@ public class UI extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
-        LV = (ListView) findViewById(R.id.listView);
+        LV = findViewById(R.id.listView);
 
         populateListView();
     }

@@ -3,12 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.dvorak.app"
+        applicationId "dvorak.app"
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        minSdkVersion = 14
+        minSdkVersion 19
     }
     buildTypes {
         release {

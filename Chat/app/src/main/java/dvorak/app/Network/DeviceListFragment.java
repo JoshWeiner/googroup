@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package dvorak.app;
 
 import android.app.ListFragment;
 import android.app.ProgressDialog;
@@ -25,6 +25,7 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
     }
 
     private static String getDeviceStatus(int deviceStatus) {
-        Log.d(WiFiDirectActivity.TAG, "Peer status :" + deviceStatus);
+        Log.d(dvorak.app.WiFiDirectActivity.TAG, "Peer status :" + deviceStatus);
         switch (deviceStatus) {
             case WifiP2pDevice.AVAILABLE:
                 return "Available";
@@ -114,6 +115,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
 
         }
 
+        @NonNull
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = convertView;
@@ -124,8 +126,8 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
             }
             WifiP2pDevice device = items.get(position);
             if (device != null) {
-                TextView top = (TextView) v.findViewById(R.id.device_name);
-                TextView bottom = (TextView) v.findViewById(R.id.device_details);
+                TextView top = v.findViewById(R.id.device_name);
+                TextView bottom = v.findViewById(R.id.device_details);
                 if (top != null) {
                     top.setText(device.deviceName);
                 }
@@ -146,9 +148,9 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
      */
     public void updateThisDevice(WifiP2pDevice device) {
         this.device = device;
-        TextView view = (TextView) mContentView.findViewById(R.id.my_name);
+        TextView view = mContentView.findViewById(R.id.my_name);
         view.setText(device.deviceName);
-        view = (TextView) mContentView.findViewById(R.id.my_status);
+        view = mContentView.findViewById(R.id.my_status);
         view.setText(getDeviceStatus(device.status));
     }
 
@@ -161,8 +163,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
         peers.addAll(peerList.getDeviceList());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
         if (peers.size() == 0) {
-            Log.d(WiFiDirectActivity.TAG, "No devices found");
-            return;
+            Log.d(dvorak.app.WiFiDirectActivity.TAG, "No devices found");
         }
 
     }

@@ -1,7 +1,5 @@
 package dvorak.app;
-//package com.dvorak.app.ui;
 
-//import com.dvorak.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.IntentFilter;
@@ -20,8 +18,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.*;
 import android.content.BroadcastReceiver;
+//import dvorak.app.Network.*;
 
-public class Main extends AppCompatActivity {
+public abstract class Main extends AppCompatActivity {
 
     /* 002 */
     Button btnOnOff, btnDiscover, btnSend;
@@ -43,10 +42,10 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,13 +82,13 @@ public class Main extends AppCompatActivity {
 
     /* 002 */
     private void setup() {
-        btnOnOff = (Button) findViewById(R.id.onOff);
-        btnDiscover = (Button) findViewById(R.id.discover);
-        btnSend = (Button) findViewById(R.id.sendButton);
-        listView = (ListView) findViewById(R.id.peerListView);
-        read_msg_box = (TextView) findViewById(R.id.readMsg);
-        connectionStatus = (TextView) findViewById(R.id.connectionStatus);
-        writeMsg = (EditText) findViewById(R.id.writeMsg);
+        btnOnOff = findViewById(R.id.atn_direct_enable);
+        btnDiscover = findViewById(R.id.discover);
+        btnSend = findViewById(R.id.sendButton);
+        listView = findViewById(R.id.peerListView);
+        read_msg_box = findViewById(R.id.readMsg);
+        connectionStatus = findViewById(R.id.connectionStatus);
+        writeMsg = findViewById(R.id.writeMsg);
 
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
@@ -97,7 +96,7 @@ public class Main extends AppCompatActivity {
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize( this.getMainLooper(), null );
 
-        mReceiver = new com.example.android.wifidirect.WiFiDirectBroadcastReceiver(mManager, mChannel, this);
+        mReceiver = new WiFiDirectBroadcastReceiver(mManager, mChannel, this);
 
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction( WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION );

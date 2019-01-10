@@ -1,12 +1,16 @@
-syntax = "proto2";
+package dvorak.app.ProtoBuf;
 
-package tutorial;
+public class Proto {
 
-option java_package = "com.example.tutorial";
-option java_outer_classname = "MessageProtos";
+    syntax ="proto2"
+    package tutorial;
 
-message Msg{
-        required string name=1;
-        required int32 id=2;
-        required string email=3;
+    option java_package = "com.example.tutorial";
+    option java_outer_classname = "MessageProtos";
+
+    message Msg {
+        required string name = 1;
+        required int32 id = 2;
+        required string email = 3;
+    }
 }

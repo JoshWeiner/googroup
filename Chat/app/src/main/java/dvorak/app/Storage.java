@@ -1,4 +1,4 @@
-package com.example.android.wifidirect;
+package dvorak.app;
 
 import android.content.ContentValues;
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class Storage {
 
             @Override
             public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-                db.execSQL("DROP IF TABLE EXISTS msgs");
+                db.execSQL("DROP TABLE IF EXISTS msgs");
                 onCreate(db);
             }
         };

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package dvorak.app;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -36,7 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
+//import dvorak.app.Network.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Objects;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device
@@ -87,7 +88,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 //                            }
 //                        }
                 );
-                ((DeviceActionListener) getActivity()).connect(config);
+                ((WiFiDirectActivity) getActivity()).connect(config);
 
             }
         });
@@ -97,7 +98,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
                     @Override
                     public void onClick(View v) {
-                        ((DeviceActionListener) getActivity()).disconnect();
+                        ((WiFiDirectActivity) getActivity()).disconnect();
                     }
                 });
 
@@ -123,12 +124,12 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         // User has picked an image. Transfer it to group owner i.e peer using
         // FileTransferService.
         Uri uri = data.getData();
-        TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
+        TextView statusText = mContentView.findViewById(R.id.status_text);
         statusText.setText("Sending: " + uri);
         Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uri);
         Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
         serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
-        serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, uri.toString());
+        serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, Objects.requireNonNull(uri).toString());
         serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
                 info.groupOwnerAddress.getHostAddress());
         serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
@@ -141,16 +142,16 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
             progressDialog.dismiss();
         }
         this.info = info;
-        this.getView().setVisibility(View.VISIBLE);
+        Objects.requireNonNull(this.getView()).setVisibility(View.VISIBLE);
 
         // The owner IP is now known.
-        TextView view = (TextView) mContentView.findViewById(R.id.group_owner);
+        TextView view = mContentView.findViewById(R.id.group_owner);
         view.setText(getResources().getString(R.string.group_owner_text)
                 + ((info.isGroupOwner == true) ? getResources().getString(R.string.yes)
                 : getResources().getString(R.string.no)));
 
         // InetAddress from WifiP2pInfo struct.
-        view = (TextView) mContentView.findViewById(R.id.device_info);
+        view = mContentView.findViewById(R.id.device_info);
         view.setText("Group Owner IP - " + info.groupOwnerAddress.getHostAddress());
 
         // After the group negotiation, we assign the group owner as the file
@@ -178,10 +179,10 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
      */
     public void showDetails(WifiP2pDevice device) {
         this.device = device;
-        this.getView().setVisibility(View.VISIBLE);
-        TextView view = (TextView) mContentView.findViewById(R.id.device_address);
+        Objects.requireNonNull(this.getView()).setVisibility(View.VISIBLE);
+        TextView view = mContentView.findViewById(R.id.device_address);
         view.setText(device.deviceAddress);
-        view = (TextView) mContentView.findViewById(R.id.device_info);
+        view = mContentView.findViewById(R.id.device_info);
         view.setText(device.toString());
 
     }
@@ -191,16 +192,16 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
      */
     public void resetViews() {
         mContentView.findViewById(R.id.btn_connect).setVisibility(View.VISIBLE);
-        TextView view = (TextView) mContentView.findViewById(R.id.device_address);
+        TextView view = mContentView.findViewById(R.id.device_address);
         view.setText(R.string.empty);
-        view = (TextView) mContentView.findViewById(R.id.device_info);
+        view = mContentView.findViewById(R.id.device_info);
         view.setText(R.string.empty);
-        view = (TextView) mContentView.findViewById(R.id.group_owner);
+        view = mContentView.findViewById(R.id.group_owner);
         view.setText(R.string.empty);
-        view = (TextView) mContentView.findViewById(R.id.status_text);
+        view = mContentView.findViewById(R.id.status_text);
         view.setText(R.string.empty);
         mContentView.findViewById(R.id.btn_start_client).setVisibility(View.GONE);
-        this.getView().setVisibility(View.GONE);
+        Objects.requireNonNull(this.getView()).setVisibility(View.GONE);
     }
 
     /**
