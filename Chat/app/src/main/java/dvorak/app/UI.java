@@ -22,8 +22,8 @@ public class UI extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_layout);
-        LV = findViewById(R.id.listView);
+        setContentView(R.id.linearLayout1);
+        LV = findViewById(R.id.list);
 
         populateListView();
     }
